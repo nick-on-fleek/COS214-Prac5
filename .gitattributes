@@ -1,0 +1,2 @@
+# Keep line endings as LF so Makefile/Dockerfile work on Windows checkouts too
+* text=auto eol=lf
