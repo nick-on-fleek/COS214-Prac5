@@ -1,0 +1,28 @@
+# Build output
+build/
+*.o
+*.d
+*.a
+*.so
+*.exe
+campusguard
+
+# Debug / profiling artefacts
+core
+core.*
+vgcore.*
+*.log
+valgrind-out.txt
+callgrind.out.*
+gmon.out
+
+# Editors / IDEs (each member's local settings)
+.vscode/
+.vs/
+.idea/
+*.swp
+*~
+
+# OS junk
+.DS_Store
+Thumbs.db
