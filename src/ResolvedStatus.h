@@ -1,11 +1,13 @@
 #ifndef RESOLVEDSTATUS_H
 #define RESOLVEDSTATUS_H
 
-class ResolvedStatus : IncidentStatus {
+#include "IncidentStatus.h"
 
-
+//  GoF Participant: ConcreteState - State pattern 
+class ResolvedStatus : public IncidentStatus {
 public:
-	void handle(Incident* i);
+    void handle(Incident* i) override;
+    std::string getName() const override;
 };
 
 #endif
