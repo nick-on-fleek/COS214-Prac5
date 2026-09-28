@@ -62,7 +62,7 @@ src/Testing_main.cpp \
 
 */
 
-
+/*
 int main() {
     std::cout << "======" << std::endl;
     std::cout << " CampusGuard - Emergency Response Test" << std::endl;
@@ -129,3 +129,4 @@ int main() {
     delete comms; // PaSystemAdapter's destructor deletes legacyPA in turn
     return 0;
 }
+*/
