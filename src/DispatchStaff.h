@@ -1,16 +1,18 @@
 #ifndef DISPATCHSTAFF_H
 #define DISPATCHSTAFF_H
 
-class DispatchStaff : OperatorCommand {
+#include "OperatorCommand.h"
+#include "Staff.h"
 
+//  GoF Participant: ConcreteCommand - Command pattern 
+class DispatchStaff : public OperatorCommand {
 public:
-	Staff* unit;
+    Staff* unit; // Receiver - not owned
 
-	void execute();
-
-	DispatchStaff(Staff* u, Mediator* m);
-
-	void undo();
+    DispatchStaff(Staff* u, Mediator* m);
+    void execute() override;
+    void undo() override;
+    std::string getDescription() const override;
 };
 
 #endif

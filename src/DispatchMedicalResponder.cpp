@@ -1,16 +1,17 @@
 #include "DispatchMedicalResponder.h"
 
-void DispatchMedicalResponder::execute() {
-	// TODO - implement DispatchMedicalResponder::execute
-	throw "Not yet implemented";
-}
+DispatchMedicalResponder::DispatchMedicalResponder(MedicalResponders* u, Mediator* m)
+    : OperatorCommand(m), unit(u) {}
 
-DispatchMedicalResponder::DispatchMedicalResponder(MedicalResponders* u, Mediator* m) {
-	// TODO - implement DispatchMedicalResponder::DispatchMedicalResponder
-	throw "Not yet implemented";
+void DispatchMedicalResponder::execute() {
+    unit->dispatch();
+    if (mediator) mediator->notify(nullptr, "medicalDispatched");
 }
 
 void DispatchMedicalResponder::undo() {
-	// TODO - implement DispatchMedicalResponder::undo
-	throw "Not yet implemented";
+    unit->recall();
+}
+
+std::string DispatchMedicalResponder::getDescription() const {
+    return "Dispatch Medical Responders";
 }

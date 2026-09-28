@@ -1,16 +1,18 @@
 #ifndef DISPATCHMEDICALRESPONDER_H
 #define DISPATCHMEDICALRESPONDER_H
 
-class DispatchMedicalResponder : OperatorCommand {
+#include "OperatorCommand.h"
+#include "MedicalResponders.h"
 
+//  GoF Participant: ConcreteCommand - Command pattern 
+class DispatchMedicalResponder : public OperatorCommand {
 public:
-	MedicalResponders* unit;
+    MedicalResponders* unit; // Receiver - not owned
 
-	void execute();
-
-	DispatchMedicalResponder(MedicalResponders* u, Mediator* m);
-
-	void undo();
+    DispatchMedicalResponder(MedicalResponders* u, Mediator* m);
+    void execute() override;
+    void undo() override;
+    std::string getDescription() const override;
 };
 
 #endif

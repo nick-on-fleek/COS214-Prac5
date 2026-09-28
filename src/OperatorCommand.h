@@ -1,21 +1,19 @@
 #ifndef OPERATORCOMMAND_H
 #define OPERATORCOMMAND_H
 
+#include <string>
+#include "Mediator.h"
+
+//  GoF Participant: Command (abstract) - Command pattern 
 class OperatorCommand {
-
-private:
-	Mediator* mediator;
-
+protected:
+    Mediator* mediator; // not owned
 public:
-	void execute();
-
-	OperatorCommand(Mediator* m);
-
-	string getDescription();
-
-	void ~OperatorCommand();
-
-	void undo();
+    explicit OperatorCommand(Mediator* m);
+    virtual void execute() = 0;
+    virtual void undo() = 0;
+    virtual std::string getDescription() const = 0;
+    virtual ~OperatorCommand() {}
 };
 
 #endif

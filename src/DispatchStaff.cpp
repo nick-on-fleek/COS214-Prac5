@@ -1,16 +1,17 @@
 #include "DispatchStaff.h"
 
-void DispatchStaff::execute() {
-	// TODO - implement DispatchStaff::execute
-	throw "Not yet implemented";
-}
+DispatchStaff::DispatchStaff(Staff* u, Mediator* m)
+    : OperatorCommand(m), unit(u) {}
 
-DispatchStaff::DispatchStaff(Staff* u, Mediator* m) {
-	// TODO - implement DispatchStaff::DispatchStaff
-	throw "Not yet implemented";
+void DispatchStaff::execute() {
+    unit->dispatch();
+    if (mediator) mediator->notify(nullptr, "staffDispatched");
 }
 
 void DispatchStaff::undo() {
-	// TODO - implement DispatchStaff::undo
-	throw "Not yet implemented";
+    unit->recall();
+}
+
+std::string DispatchStaff::getDescription() const {
+    return "Dispatch Facilities Staff";
 }

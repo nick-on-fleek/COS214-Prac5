@@ -1,16 +1,18 @@
 #include "DispatchSecurity.h"
 
-void DispatchSecurity::execute() {
-	// TODO - implement DispatchSecurity::execute
-	throw "Not yet implemented";
-}
+DispatchSecurity::DispatchSecurity(SecurityUnit* u, Mediator* m)
+    : OperatorCommand(m), unit(u) {}
 
-DispatchSecurity::DispatchSecurity(SecurityUnit* u, Mediator* m) {
-	// TODO - implement DispatchSecurity::DispatchSecurity
-	throw "Not yet implemented";
+void DispatchSecurity::execute() {
+    unit->dispatch();
+    // Command -> Mediator: report the dispatch so other components can coordinate.
+    if (mediator) mediator->notify(nullptr, "securityDispatched");
 }
 
 void DispatchSecurity::undo() {
-	// TODO - implement DispatchSecurity::undo
-	throw "Not yet implemented";
+    unit->recall();
+}
+
+std::string DispatchSecurity::getDescription() const {
+    return "Dispatch Security Unit";
 }
