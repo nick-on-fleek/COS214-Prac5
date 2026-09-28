@@ -1,16 +1,17 @@
 #include "EmergencyAlert.h"
+#include <iostream>
+
+EmergencyAlert::EmergencyAlert(CommsSystem* c, std::string msg, Mediator* m)
+    : OperatorCommand(m), commsSystem(c), msg(msg) {}
 
 void EmergencyAlert::execute() {
-	// TODO - implement EmergencyAlert::execute
-	throw "Not yet implemented";
+    commsSystem->sendAlert(msg);
 }
 
 void EmergencyAlert::undo() {
-	// TODO - implement EmergencyAlert::undo
-	throw "Not yet implemented";
+    std::cout << "[EmergencyAlert] Cannot retract an alert that has already been broadcast." << std::endl;
 }
 
-EmergencyAlert::EmergencyAlert(string msg) {
-	// TODO - implement EmergencyAlert::EmergencyAlert
-	throw "Not yet implemented";
+std::string EmergencyAlert::getDescription() const {
+    return "Emergency Alert: " + msg;
 }
