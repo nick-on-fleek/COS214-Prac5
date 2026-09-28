@@ -55,6 +55,10 @@ int main() {
 
     OperatorConsole console;
 
+    cout << " Demo test: cancel with nothing issued yet (invalid-operation case) " << endl;
+    console.cancelLastCommand();
+    cout << endl;
+
     cout << "Scenario 1" << endl;
     cout << "Bomb threat is reported inside UP's Law Library. Emergency exits are opened and alarms go off. Students are notified from communications (and old PA) system to leave the building. Staff help evacuate the students and security watch the area" << endl << endl;
 
@@ -80,6 +84,21 @@ int main() {
     cout << endl;
 
     commSystem->sendAlert("Students can now return to the Law Library");
+
+    cout << endl << " Demo test: advancing an already-resolved incident (invalid-operation case) " << endl;
+    bomb.advanceStatus();
+ 
+    cout << endl << "Scenario 2" << endl;
+    cout << "An intruder is reported in the Law Library. Security is dispatched, the building"
+         << " goes into full lockdown, and an alert is sent out - this time via CampusGuardFacade's"
+         << " forward workflow (handleIncident) rather than issuing commands by hand." << endl << endl;
+ 
+    IntruderIncident intruder("Intruder Incident", &coordinators);
+    cgf.handleIncident(&intruder);   // dispatch + lockdown + alert + advance, all through the Facade
+    cgf.resolveIncident(&intruder);
+ 
+    cout << endl << " Demo test: legacy PA system failure on an empty message (invalid-operation case) " << endl;
+    console.issueCommand(new EmergencyAlert(commSystem, "", &coordinators));
 
     delete commSystem;
     // delete strategy
