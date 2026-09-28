@@ -1,24 +1,34 @@
 #include "Building.h"
+#include <iostream>
 
-Building::Building(string ID) {
-	// TODO - implement Building::Building
-	throw "Not yet implemented";
-}
+Building::Building(std::string ID) : buildingID(ID), accessStrat(nullptr), accessState("Normal") {}
 
 void Building::setAccessStrategy(AccessStrategy* s) {
-	// TODO - implement Building::setAccessStrategy
-	throw "Not yet implemented";
+    delete accessStrat;
+    accessStrat = s;
 }
 
 void Building::executeAccessChange() {
-	// TODO - implement Building::executeAccessChange
-	throw "Not yet implemented";
+    if (!accessStrat) {
+        std::cout << "[Building] No access strategy set for " << buildingID
+                  << " -- cannot change access." << std::endl;
+        return;
+    }
+    accessStrat->applyAccess(this);
 }
 
-string Building::getAccessState() {
-	return this->accessState;
+std::string Building::getAccessState() {
+    return this->accessState;
 }
 
-void Building::setAccessState(string s) {
-	this->accessState = s;
+void Building::setAccessState(std::string s) {
+    this->accessState = s;
+}
+
+std::string Building::getBuildingId() const {
+    return buildingID;
+}
+
+Building::~Building() {
+    delete accessStrat;
 }

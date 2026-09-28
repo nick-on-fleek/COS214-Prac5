@@ -1,14 +1,24 @@
 #ifndef BUILDINGACCESS_H
 #define BUILDINGACCESS_H
 
-class BuildingAccess : OperatorCommand {
+#include "OperatorCommand.h"
+#include "Building.h"
+#include "AccessStrategy.h"
 
+//  GoF Participant: ConcreteCommand - Command pattern.
+//      Also the bridge into the Strategy pattern: it hands the Building
+//      (Strategy-context) the AccessStrategy it should apply. 
+class BuildingAccess : public OperatorCommand {
 public:
-	Building* mainBuilding;
+    Building* mainBuilding; // Receiver -- not owned
 
-	void execute();
+    BuildingAccess(Building* b, AccessStrategy* s, Mediator* m);
+    void execute() override;
+    void undo() override;
+    std::string getDescription() const override;
 
-	void undo();
+private:
+    AccessStrategy* strategy; // ownership transferred to Building on execute()
 };
 
 #endif

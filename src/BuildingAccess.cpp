@@ -1,11 +1,22 @@
 #include "BuildingAccess.h"
+#include "PartialLockdownStrategy.h"
+#include <iostream>
+
+BuildingAccess::BuildingAccess(Building* b, AccessStrategy* s, Mediator* m)
+    : OperatorCommand(m), mainBuilding(b), strategy(s) {}
 
 void BuildingAccess::execute() {
-	// TODO - implement BuildingAccess::execute
-	throw "Not yet implemented";
+    mainBuilding->setAccessStrategy(strategy); // Building takes ownership from here
+    mainBuilding->executeAccessChange();
 }
 
 void BuildingAccess::undo() {
-	// TODO - implement BuildingAccess::undo
-	throw "Not yet implemented";
+    std::cout << "[BuildingAccess] Reverting " << mainBuilding->getBuildingId()
+              << " to a partial-access state." << std::endl;
+    mainBuilding->setAccessStrategy(new PartialLockdownStrategy());
+    mainBuilding->executeAccessChange();
+}
+
+std::string BuildingAccess::getDescription() const {
+    return "Change Building Access (" + mainBuilding->getBuildingId() + ")";
 }
