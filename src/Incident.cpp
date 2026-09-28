@@ -1,29 +1,35 @@
 #include "Incident.h"
+#include "EscalatedStatus.h"
+#include <iostream>
 
-Incident::Incident(string id, Mediator m) {
-	// TODO - implement Incident::Incident
-	throw "Not yet implemented";
-}
+Incident::Incident(std::string id, Mediator* m)
+    : Colleague(m), id(id), status(nullptr) {}
 
-void Incident::ChangeStatus(IncidentStatus* s) {
-	// TODO - implement Incident::ChangeStatus
-	throw "Not yet implemented";
+void Incident::changeStatus(IncidentStatus* s) {
+    delete status;
+    status = s;
+    changed("statusChanged"); // Colleague -> Mediator: lets other components coordinate
 }
 
 void Incident::advanceStatus() {
-	// TODO - implement Incident::advanceStatus
-	throw "Not yet implemented";
+    if (status) {
+        status->handle(this);
+    }
 }
 
-IncidentStatus* Incident::getStatus() {
-	return this->status;
+void Incident::escalate() {
+    std::cout << "[Incident] " << id << " has been escalated by an operator." << std::endl;
+    changeStatus(new EscalatedStatus());
 }
 
-string Incident::getId() {
-	return this->id;
+IncidentStatus* Incident::getStatus() const {
+    return this->status;
 }
 
-void Incident::describe() {
-	// TODO - implement Incident::describe
-	throw "Not yet implemented";
+std::string Incident::getId() const {
+    return this->id;
+}
+
+Incident::~Incident() {
+    delete status;
 }
