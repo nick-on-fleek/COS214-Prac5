@@ -1,11 +1,18 @@
 #ifndef BOMBINCIDENT_H
 #define BOMBINCIDENT_H
 
-class BombIncident : Incident {
+#include "Incident.h"
 
-
+//  Fixed incident type (plain polymorphism, not itself a pattern) 
+// State diagram: bomb threat -> Escalated DIRECTLY (skips Dispatched);
+// facilities staff dispatched; building access -> EvacuationStrategy.
+class BombIncident : public Incident {
 public:
-	void describe();
+    BombIncident(std::string id, Mediator* m);
+    std::string describe() const override;
+    OperatorCommand* createDispatchCommand(IncidentCoordinator* coordinator) override;
+    AccessStrategy* createAccessStrategy() const override;
+    IncidentStatus* createNextStatusFromReported() const override;
 };
 
 #endif
