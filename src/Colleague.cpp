@@ -1,11 +1,15 @@
 #include "Colleague.h"
 
+Colleague::Colleague(Mediator* m) : mediator(m) {}
+
 void Colleague::setMediator(Mediator* m) {
-	// TODO - implement Colleague::setMediator
-	throw "Not yet implemented";
+    mediator = m;
 }
 
-void Colleague::changed(string event) {
-	// TODO - implement Colleague::changed
-	throw "Not yet implemented";
+void Colleague::changed(const std::string& event) {
+    if (mediator) {
+        mediator->notify(this, event);
+    }
 }
+
+Colleague::~Colleague() {}
