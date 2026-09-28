@@ -1,16 +1,22 @@
 #ifndef MEDICALRESPONDERS_H
 #define MEDICALRESPONDERS_H
 
-class MedicalResponders : People {
+#include <vector>
+#include <string>
+#include "People.h"
 
+//  GoF Participant: ConcreteReceiver - Command pattern 
+class MedicalResponders : public People {
 public:
-	vector<string> responders;
+    std::vector<std::string> responders;
 
-	void dispatch();
+    MedicalResponders();
+    void dispatch() override;
+    void recall() override;
+    void action() override;
 
-	void action();
-
-	void recall();
+private:
+    bool dispatched;
 };
 
 #endif

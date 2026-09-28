@@ -1,16 +1,26 @@
 #include "MedicalResponders.h"
+#include <iostream>
+
+MedicalResponders::MedicalResponders() : dispatched(false) {}
 
 void MedicalResponders::dispatch() {
-	// TODO - implement MedicalResponders::dispatch
-	throw "Not yet implemented";
-}
-
-void MedicalResponders::action() {
-	// TODO - implement MedicalResponders::action
-	throw "Not yet implemented";
+    if (dispatched) {
+        std::cout << "[MedicalResponders] Already dispatched." << std::endl;
+        return;
+    }
+    dispatched = true;
+    std::cout << "[MedicalResponders] Medical team dispatched to the scene." << std::endl;
 }
 
 void MedicalResponders::recall() {
-	// TODO - implement MedicalResponders::recall
-	throw "Not yet implemented";
+    if (!dispatched) {
+        std::cout << "[MedicalResponders] Not currently dispatched -- nothing to recall." << std::endl;
+        return;
+    }
+    dispatched = false;
+    std::cout << "[MedicalResponders] Medical team recalled to base." << std::endl;
+}
+
+void MedicalResponders::action() {
+    std::cout << "[MedicalResponders] Standing by / treating casualties on-site." << std::endl;
 }

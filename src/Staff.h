@@ -1,16 +1,22 @@
 #ifndef STAFF_H
 #define STAFF_H
 
-class Staff : People {
+#include <vector>
+#include <string>
+#include "People.h"
 
+//  GoF Participant: ConcreteReceiver - Command pattern 
+class Staff : public People {
 public:
-	vector<string> staffMembers;
+    std::vector<std::string> staffMembers;
 
-	void dispatch();
+    Staff();
+    void dispatch() override;
+    void recall() override;
+    void action() override;
 
-	void action();
-
-	void recall();
+private:
+    bool dispatched;
 };
 
 #endif

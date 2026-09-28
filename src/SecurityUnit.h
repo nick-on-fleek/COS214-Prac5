@@ -1,16 +1,22 @@
 #ifndef SECURITYUNIT_H
 #define SECURITYUNIT_H
 
-class SecurityUnit : People {
+#include <vector>
+#include <string>
+#include "People.h"
 
+//  GoF Participant: ConcreteReceiver - Command pattern 
+class SecurityUnit : public People {
 public:
-	vector<string> security;
+    std::vector<std::string> security;
 
-	void dispatch();
+    SecurityUnit();
+    void dispatch() override;
+    void recall() override;
+    void action() override;
 
-	void action();
-
-	void recall();
+private:
+    bool dispatched;
 };
 
 #endif
