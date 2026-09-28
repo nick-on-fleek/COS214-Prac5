@@ -1,11 +1,18 @@
 #include "PaSystemAdapter.h"
+#include <iostream>
 
-void PaSystemAdapter::sendAlert(string m) {
-	// TODO - implement PaSystemAdapter::sendAlert
-	throw "Not yet implemented";
+PaSystemAdapter::PaSystemAdapter(PaSystem* legacy) : adaptee(legacy) {}
+
+void PaSystemAdapter::sendAlert(std::string m) {
+    currentMessage = m;
+    int result = adaptee->broadcast(m.c_str(), 1); // priority 1 = emergency
+    if (result != 0) {
+        // Invalid-operation case: legacy system failed to broadcast -- handled
+        // sensibly rather than silently ignored or crashing.
+        std::cout << "[PaSystemAdapter] Legacy PA system failed to broadcast the alert." << std::endl;
+    }
 }
 
-PaSystemAdapter::PaSystemAdapter(PaSystem* legacy) {
-	// TODO - implement PaSystemAdapter::PaSystemAdapter
-	throw "Not yet implemented";
+PaSystemAdapter::~PaSystemAdapter() {
+    delete adaptee;
 }

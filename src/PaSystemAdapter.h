@@ -1,14 +1,17 @@
 #ifndef PASYSTEMADAPTER_H
 #define PASYSTEMADAPTER_H
 
-class PaSystemAdapter : CommsSystem {
+#include "CommsSystem.h"
+#include "PaSystem.h"
 
+//  GoF Participant: Adapter - Adapter pattern 
+class PaSystemAdapter : public CommsSystem {
 public:
-	PaSystem* adaptee;
+    PaSystem* adaptee; // owned - deleted in destructor
 
-	void sendAlert(string m);
-
-	PaSystemAdapter(PaSystem* legacy);
+    explicit PaSystemAdapter(PaSystem* legacy);
+    void sendAlert(std::string m) override;
+    ~PaSystemAdapter();
 };
 
 #endif
