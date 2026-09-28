@@ -23,7 +23,7 @@ make
 ## Valgrind / GDB
 
 ```
-make valgrind
+docker compose run --rm campusguard valgrind --leak-check=full --show-leak-kinds=all ./campusguard
 ```
 
 ## Layout
