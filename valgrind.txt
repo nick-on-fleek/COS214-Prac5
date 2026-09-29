@@ -1,0 +1,78 @@
+==1== Memcheck, a memory error detector
+==1== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==1== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==1== Command: ./campusguard
+==1== 
+>
+ Demo test: cancel with nothing issued yet (invalid-operation case) 
+[OperatorConsole] No action to cancel.
+
+Scenario 1
+Bomb threat is reported inside UP's Law Library. Emergency exits are opened and alarms go off. Students are notified from communications (and old PA) system to leave the building. Staff help evacuate the students and security watch the area
+
+[Mediator] Incident Bomb Threat Incident is now Reported.
+[State] Incident Bomb Threat Incident: Reported -> (next status decided by incident type).
+[Mediator] Incident Bomb Threat Incident is now Escalated.
+[Mediator] Coordinating: escalation protocol engaged for incident Bomb Threat Incident -- all units remain on high alert.
+[OperatorConsole] Executing: Change Building Access (Law Library)
+[Strategy] Law Library is now in EVACUATION MODE -- exits unlocked, alarms sounding.
+[OperatorConsole] Executing: Emergency Alert: All students to please evacuate the Law Library
+[Legacy PA System] Broadcasting (priority 1): All students to please evacuate the Law Library
+[OperatorConsole] Executing: Dispatch Facilities Staff
+[Staff] Facilities staff dispatched to the scene.
+[Mediator] Facilities staff dispatch acknowledged -- coordinating evacuation support.
+[SecurityUnit] Securing perimeter and controlling access.
+
+The following would be by the University's protocol | for example | Police/Bomb Squad called, then they check the library
+Bomb threat was a false alarm (no bomb was found)
+
+===== CampusGuardFacade: resolving Bomb Threat [Bomb Threat Incident] =====
+[State] Incident Bomb Threat Incident: Escalated -> Resolved.
+[Mediator] Incident Bomb Threat Incident is now Resolved.
+[Mediator] Incident Bomb Threat Incident closed out -- stand down.
+[OperatorConsole] Executing: Change Building Access (Law Library)
+[Strategy] Law Library is now PARTIALLY RESTRICTED -- main entrance only.
+
+[Legacy PA System] Broadcasting (priority 1): Students can now return to the Law Library
+
+ Demo test: advancing an already-resolved incident (invalid-operation case) 
+[State] Incident Bomb Threat Incident is already Resolved -- no further action taken.
+
+Scenario 2
+An intruder is reported in the Law Library. Security is dispatched, the building goes into full lockdown, and an alert is sent out - this time via CampusGuardFacade's forward workflow (handleIncident) rather than issuing commands by hand.
+
+[Mediator] Incident Intruder Incident is now Reported.
+
+===== CampusGuardFacade: handling Intruder Alert [Intruder Incident] =====
+[OperatorConsole] Executing: Dispatch Security Unit
+[SecurityUnit] Security officers dispatched to the scene.
+[Mediator] Security dispatch acknowledged -- placing medical team on stand-by.
+[MedicalResponders] Standing by / treating casualties on-site.
+[OperatorConsole] Executing: Change Building Access (Law Library)
+[Strategy] Law Library is now in FULL LOCKDOWN -- all entry points sealed.
+[OperatorConsole] Executing: Emergency Alert: Emergency reported: Intruder Alert [Intruder Incident]
+[Legacy PA System] Broadcasting (priority 1): Emergency reported: Intruder Alert [Intruder Incident]
+[State] Incident Intruder Incident: Reported -> (next status decided by incident type).
+[Mediator] Incident Intruder Incident is now Dispatched.
+[Mediator] Coordinating: response units are on scene for incident Intruder Incident.
+
+===== CampusGuardFacade: resolving Intruder Alert [Intruder Incident] =====
+[State] Incident Intruder Incident: Dispatched -> Resolved.
+[Mediator] Incident Intruder Incident is now Resolved.
+[Mediator] Incident Intruder Incident closed out -- stand down.
+[OperatorConsole] Executing: Change Building Access (Law Library)
+[Strategy] Law Library is now PARTIALLY RESTRICTED -- main entrance only.
+
+ Demo test: legacy PA system failure on an empty message (invalid-operation case) 
+[OperatorConsole] Executing: Emergency Alert: 
+[PaSystemAdapter] Legacy PA system failed to broadcast the alert.
+<
+==1== 
+==1== HEAP SUMMARY:
+==1==     in use at exit: 0 bytes in 0 blocks
+==1==   total heap usage: 83 allocs, 83 frees, 80,415 bytes allocated
+==1== 
+==1== All heap blocks were freed -- no leaks are possible
+==1== 
+==1== For lists of detected and suppressed errors, rerun with: -s
+==1== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
