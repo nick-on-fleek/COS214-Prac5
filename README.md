@@ -24,6 +24,8 @@ make
 
 ```
 docker compose run --rm campusguard valgrind --leak-check=full --show-leak-kinds=all ./campusguard
+
+docker compose run --rm campusguard gdb ./campusguard
 ```
 
 ## Layout

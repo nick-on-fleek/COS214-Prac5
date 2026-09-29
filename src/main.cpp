@@ -106,8 +106,8 @@ int main() {
     cout << endl << " Demo test: legacy PA system failure on an empty message (invalid-operation case) " << endl;
     console.issueCommand(new EmergencyAlert(commSystem, "", &coordinators));
 
+    // delete strategy;
     delete commSystem;
-    // delete strategy
     // delete cgf;
 
     cout << "<" << endl;
